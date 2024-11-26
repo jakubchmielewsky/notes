@@ -4,7 +4,7 @@ import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import Register from './pages/Register';
-import HeaderControls from './components/mobileLayout/HeaderControls';
+import RightMenu from './components/desktopLayout/RightMenu';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
       <Routes>
         <Route
           path='/'
-          element={<HeaderControls/>}>
+          element={<RightMenu/>}>
             {/*nested routes*/}
         </Route>
         <Route
