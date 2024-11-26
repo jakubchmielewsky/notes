@@ -4,8 +4,7 @@ import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import Register from './pages/Register';
-import SidebarNav from './components/desktopLayout/SidebarNav';
-import MenuBar from './components/mobileLayout/MenuBar';
+import Header from './components/desktopLayout/Header';
 
 function App() {
   return (
@@ -13,7 +12,7 @@ function App() {
       <Routes>
         <Route
           path='/'
-          element={<MenuBar/>}>
+          element={<Header/>}>
             {/*nested routes*/}
         </Route>
         <Route
