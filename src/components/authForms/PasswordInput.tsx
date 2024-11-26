@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ReactComponent as Show } from "./../assets/images/icon-show-password.svg"; // Ensure the correct path
-import { ReactComponent as Hide } from "./../assets/images/icon-hide-password.svg";
-import { ReactComponent as Info } from "./../assets/images/icon-info.svg";
+import { ReactComponent as Show } from "./../../assets/images/icon-show-password.svg"; // Ensure the correct path
+import { ReactComponent as Hide } from "./../../assets/images/icon-hide-password.svg";
+import { ReactComponent as Info } from "./../../assets/images/icon-info.svg";
 
 interface PasswordInputProps {
   id?: string;

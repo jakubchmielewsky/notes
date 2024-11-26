@@ -1,8 +1,8 @@
-import { ReactComponent as Logo } from './../assets/images/logo.svg';
-import { ReactComponent as ChevronRight } from './../assets/images/icon-chevron-right.svg';
-import { ReactComponent as Home } from './../assets/images/icon-home.svg';
-import { ReactComponent as Archived } from './../assets/images/icon-archive.svg';
-import { ReactComponent as Tag} from './../assets/images/icon-tag.svg';
+import { ReactComponent as Logo } from './../../assets/images/logo.svg';
+import { ReactComponent as ChevronRight } from './../../assets/images/icon-chevron-right.svg';
+import { ReactComponent as Home } from './../../assets/images/icon-home.svg';
+import { ReactComponent as Archived } from './../../assets/images/icon-archive.svg';
+import { ReactComponent as Tag} from './../../assets/images/icon-tag.svg';
 import { useState } from 'react';
 
 

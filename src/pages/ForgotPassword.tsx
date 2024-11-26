@@ -1,8 +1,8 @@
 import { ReactComponent as Logo } from './../assets/images/logo.svg';
 
 import { useState } from 'react';
-import EmailInput from '../components/EmailInput';
-import FormHeader from '../components/FormHeader';
+import EmailInput from '../components/authForms/EmailInput';
+import FormHeader from '../components/authForms/FormHeader';
 
 const ForgotPassword: React.FC = () => {
   const [formData, setFormData] = useState({ email: ""});

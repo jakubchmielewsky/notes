@@ -3,9 +3,9 @@ import { ReactComponent as Google } from './../assets/images/icon-google.svg';
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import EmailInput from '../components/EmailInput';
-import PasswordInput from '../components/PasswordInput';
-import FormHeader from '../components/FormHeader';
+import EmailInput from '../components/authForms/EmailInput';
+import PasswordInput from '../components/authForms/PasswordInput';
+import FormHeader from '../components/authForms/FormHeader';
 
 const ResetPassword: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);

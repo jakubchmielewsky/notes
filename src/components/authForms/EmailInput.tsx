@@ -1,5 +1,5 @@
 import React from "react";
-import { ReactComponent as Info } from "./../assets/images/icon-info.svg"; // Ensure the correct path
+import { ReactComponent as Info } from "./../../assets/images/icon-info.svg"; // Ensure the correct path
 
 interface EmailInputProps {
   id?: string;
