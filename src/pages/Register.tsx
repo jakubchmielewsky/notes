@@ -72,7 +72,7 @@ const Register: React.FC = () => {
           />
 
           {/* Submit Button */}
-          <button type="submit" className="w-full bg-custom-blue-500 px-200 py-150 rounded-8 text-white hover:bg-custom-blue-700 focus:outline outline-offset-2 outline-2 outline-custom-neutral-400">Login</button>
+          <button type="submit" className="w-full bg-custom-blue-500 px-200 py-150 rounded-8 text-white hover:bg-custom-blue-700 focus:outline outline-offset-2 outline-2 outline-custom-neutral-400">Sign Up</button>
         </form>
 
         {/* Alternative Login */}
@@ -86,7 +86,7 @@ const Register: React.FC = () => {
 
         <div className="border-t-1 dark:border-custom-neutral-800"></div>
 
-        {/* Sign-Up Link */}
+        {/* Login Link */}
         <p className="text-preset-5 text-center text-custom-neutral-600 dark:text-custom-neutral-300">Already have an account? <Link to="/register" className="text-custom-neutral-950 dark:text-custom-neutral-200 hover:text-custom-blue-500">Login</Link></p>
       </div>
     </div>
