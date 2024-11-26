@@ -4,7 +4,7 @@ import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import Register from './pages/Register';
-import Header from './components/desktopLayout/Header';
+import Header from './components/mobileLayout/Header';
 
 function App() {
   return (
