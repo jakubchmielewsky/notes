@@ -9,12 +9,12 @@ interface Props{
     onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
-const SettingsItem : React.FC<Props> = ({name,Icon,selected,onClick}) => {
+const MenuItem : React.FC<Props> = ({name,Icon,selected,onClick}) => {
 
     return(
         <button name={name} 
             className={`flex justify-between w-full px-150 py-[10px] text-preset-4 rounded-8 dark:text-custom-neutral-200 
-                ${selected===name&& 'bg-custom-neutral-100 dark:bg-custom-neutral-800'}`}
+                ${selected===name&& 'bg-custom-neutral-100 dark:bg-custom-neutral-700'}`}
             onClick={onClick}
         >
             <div className='flex items-center gap-100'>
@@ -25,4 +25,4 @@ const SettingsItem : React.FC<Props> = ({name,Icon,selected,onClick}) => {
     )
 }
 
-export default SettingsItem;
+export default MenuItem;
