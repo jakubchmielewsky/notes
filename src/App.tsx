@@ -6,6 +6,7 @@ import ResetPassword from './pages/ResetPassword';
 import Register from './pages/Register';
 import SettingsMenu from './components/desktopLayout/SettingsMenu';
 import SidebarNav from './components/desktopLayout/SidebarNav';
+import AllNotes from './components/AllNotes';
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
       <Routes>
         <Route
           path='/'
-          element={<SidebarNav tags={["tag1", "tag2", "devicePixelRatio", "food"]}/>}>
+          element={<AllNotes/>}>
             {/*nested routes*/}
         </Route>
         <Route
