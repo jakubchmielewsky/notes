@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import SettingsMenu from './components/desktopLayout/SettingsMenu';
 import SidebarNav from './components/desktopLayout/SidebarNav';
 import AllNotes from './components/AllNotes';
+import Note from './components/Note';
 
 function App() {
   return (
@@ -14,7 +15,12 @@ function App() {
       <Routes>
         <Route
           path='/'
-          element={<AllNotes/>}>
+          element={<Note note={{
+            title: "Shopping List",
+            tags: ["groceries", "weekly"],
+            lastEdited: new Date("2024-11-01"),
+            text: "Remember to buy milk, eggs, and bread.",
+          }}/>}>
             {/*nested routes*/}
         </Route>
         <Route
