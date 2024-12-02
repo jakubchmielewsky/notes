@@ -8,7 +8,7 @@ interface UserState{
     login: (email: string, password: string) => Promise<void>,
     logout: () => Promise<void>,
     register: (email: string, password: string) => Promise<void>,
-
+    setUser: (user : User | null) => void,
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -30,6 +30,7 @@ export const useUserStore = create<UserState>((set) => ({
         set({ loading: true});
         try {
             await signOut(auth);
+            set({loading: false});
         } catch (error) {
             console.log(error);
         }
@@ -45,4 +46,12 @@ export const useUserStore = create<UserState>((set) => ({
             
         }
     },
-}))
+
+    setUser: (user : User | null) => {
+        set({currentUser: user});
+    }
+}));
+
+onAuthStateChanged(auth, (user) => {
+    useUserStore.getState().setUser(user);
+})

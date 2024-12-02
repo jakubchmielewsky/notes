@@ -90,7 +90,7 @@ module.exports = {
 
       screens: {
         'tablet': '540px',
-        'desktop ': '900px',
+        'desktop': '900px',
       },
 
       boxShadow: {

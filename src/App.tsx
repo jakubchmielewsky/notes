@@ -8,6 +8,15 @@ import SettingsMenu from './components/desktopLayout/SettingsMenu';
 import SidebarNav from './components/desktopLayout/SidebarNav';
 import AllNotes from './components/AllNotes';
 import Note from './components/Note';
+import ProtectedRoute from './routes/ProtectedRoute';
+import Dashboard from './pages/Dashboard';
+
+{/* <Note note={{
+            title: "Shopping List",
+            tags: ["groceries", "weekly"],
+            lastEdited: new Date("2024-11-01"),
+            text: "Remember to buy milk, eggs, and bread.",
+          }}/> */}
 
 function App() {
   return (
@@ -15,12 +24,7 @@ function App() {
       <Routes>
         <Route
           path='/'
-          element={<Note note={{
-            title: "Shopping List",
-            tags: ["groceries", "weekly"],
-            lastEdited: new Date("2024-11-01"),
-            text: "Remember to buy milk, eggs, and bread.",
-          }}/>}>
+          element={<ProtectedRoute replace={true}><Dashboard/></ProtectedRoute>}>
             {/*nested routes*/}
         </Route>
         <Route

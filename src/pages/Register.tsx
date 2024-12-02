@@ -2,15 +2,19 @@ import { ReactComponent as Logo } from './../assets/images/logo.svg';
 import { ReactComponent as Google } from './../assets/images/icon-google.svg';
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import EmailInput from '../components/authForms/EmailInput';
 import PasswordInput from '../components/authForms/PasswordInput';
 import FormHeader from '../components/authForms/FormHeader';
+import { useUserStore } from '../stores/userStore';
 
 const Register: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState({ email: "", password: "" });
+
+  const navigate = useNavigate();
+  const {register} =useUserStore();
 
   // Toggles the visibility of the password field
   const toggleShowPassword = () => setShowPassword((prev) => !prev);
@@ -42,7 +46,9 @@ const Register: React.FC = () => {
 
     if (validate()) {
       console.log("Form submitted:", formData);
-      // Submit logic here
+      
+      register(formData.email, formData.password);
+      navigate("/", {replace: true});
     }
   };
 
