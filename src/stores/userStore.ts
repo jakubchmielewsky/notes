@@ -3,7 +3,7 @@ import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndP
 import { auth } from "../firebase/firebaseConfig"
 
 interface UserState{
-    currentUser: null | {},
+    currentUser: null | User,
     loading: boolean,
     login: (email: string, password: string) => Promise<void>,
     logout: () => Promise<void>,

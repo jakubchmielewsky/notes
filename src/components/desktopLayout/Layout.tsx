@@ -8,7 +8,7 @@ import { Outlet } from "react-router-dom";
 
 
 const DesktopLayout = () => {
-    const [selectedTab, setSelectedTab] = useState("All Notes")
+    const [selectedTab, setSelectedTab] = useState("All Notes");
 
     return(
         <div className="h-full w-full flex">
@@ -17,16 +17,6 @@ const DesktopLayout = () => {
                 <Header openedTab={selectedTab} handleSearch={()=>{}}/>
 
                 <Outlet/>
-                {/* <div className="flex h-full">
-                    <AllNotes/>
-                    <Note note={{
-                        title: "Shopping List",
-                        tags: ["groceries", "weekly"],
-                        lastEdited: new Date("2024-11-01"),
-                        text: "Remember to buy milk, eggs, and bread.",
-                    }} desktopLayout/>
-                    <RightMenu archive={()=>{}} remove={()=>{}}/>
-                </div> */}
 
             </div>
         </div>

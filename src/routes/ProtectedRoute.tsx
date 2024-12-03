@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useUserStore } from "../stores/userStore";
+import { useUserStore } from "../stores/UserStore";
 
 interface Props{
     children : React.ReactNode,

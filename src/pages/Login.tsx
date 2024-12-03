@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import EmailInput from '../components/authForms/EmailInput';
 import PasswordInput from '../components/authForms/PasswordInput';
 import FormHeader from '../components/authForms/FormHeader';
-import { useUserStore } from '../stores/userStore';
+import { useUserStore } from '../stores/UserStore';
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
