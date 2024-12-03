@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
 import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
@@ -6,26 +6,37 @@ import ResetPassword from './pages/ResetPassword';
 import Register from './pages/Register';
 import SettingsMenu from './components/desktopLayout/SettingsMenu';
 import SidebarNav from './components/desktopLayout/SidebarNav';
-import AllNotes from './components/AllNotes';
+import AllNotes from './pages/AllNotes';
 import Note from './components/Note';
 import ProtectedRoute from './routes/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
 
-{/* <Note note={{
-            title: "Shopping List",
-            tags: ["groceries", "weekly"],
-            lastEdited: new Date("2024-11-01"),
-            text: "Remember to buy milk, eggs, and bread.",
-          }}/> */}
+{/*  */}
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route
-          path='/'
+          path='/dashboard'
           element={<ProtectedRoute replace={true}><Dashboard/></ProtectedRoute>}>
             {/*nested routes*/}
+            <Route
+              index
+              element={<Navigate to="/dashboard/allnotes" replace/>}
+            />
+            <Route
+              path='/dashboard/allnotes'
+              element={<AllNotes/>}
+            />
+            <Route
+              path='/dashboard/archivednotes'
+              element={<div>archived</div>}
+            />
+            <Route
+              path='/dashboard/tags'
+              element={<div>tags</div>}
+            />
         </Route>
         <Route
             path='/login'

@@ -48,7 +48,7 @@ const Register: React.FC = () => {
       console.log("Form submitted:", formData);
       
       register(formData.email, formData.password);
-      navigate("/", {replace: true});
+      navigate("/dashboard");
     }
   };
 

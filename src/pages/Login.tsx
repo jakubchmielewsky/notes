@@ -48,7 +48,7 @@ const Login: React.FC = () => {
       console.log("Form submitted:", formData);
       
       login(formData.email, formData.password);
-      navigate("/");
+      navigate("/dashboard");
 
     }
   };

@@ -3,7 +3,7 @@ module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
-  darkMode: 'medi',
+  darkMode: 'media',
   theme: {
     extend: {
       fontFamily: {

@@ -30,7 +30,7 @@ const testNotes = [
 ];
   
 
-const AllNotes = ({desktopLayout=true}) => {
+const NotesList = ({desktopLayout=true}) => {
     const [selected,setSelected] = useState("");
 
     const handleClick = (e:React.MouseEvent<HTMLButtonElement>) => {
@@ -41,7 +41,7 @@ const AllNotes = ({desktopLayout=true}) => {
                 
 
     return(
-        <div className={`relative flex flex-col px-200 pt-250 gap-200 dark:bg-custom-neutral-950 dark:text-white tablet:px-400 tablet:py-300 ${desktopLayout?"w-[290px]":"w-full"}`}>
+        <div className={`relative flex flex-col px-200 pt-250 gap-200 border-r-1 border-custom-neutral-200 dark:border-custom-neutral-800 dark:bg-custom-neutral-950 dark:text-white tablet:px-400 tablet:py-300 ${desktopLayout?"w-[290px]":"w-full"}`}>
            {!desktopLayout?<h2 className="text-preset-1 font-semibold">All Notes</h2>:
             <button className="flex justify-center items-center gap-050 w-full bg-custom-blue-500 px-200 py-150 rounded-8 text-preset-4 text-white hover:bg-custom-blue-700 focus:outline outline-offset-2 outline-2 outline-custom-neutral-400"
             >
@@ -71,4 +71,4 @@ const AllNotes = ({desktopLayout=true}) => {
     )
 }
 
-export default AllNotes;
+export default NotesList;

@@ -7,7 +7,7 @@ const Dashboard : React.FC = () => {
 
     useEffect(() => {
         const handleResize = () => {
-            setIsMobile(window.innerWidth < 768);
+            setIsMobile(window.innerWidth < 900);
         };
 
         window.addEventListener("resize", handleResize);
@@ -15,7 +15,7 @@ const Dashboard : React.FC = () => {
     }, []);
 
     return(
-        <div className="w-screen h-screen overflow-hidden bg-white dark:bg-custom-neutral-950 max-w-[1600px] flex justify-center">
+        <div className="w-screen h-screen overflow-hidden bg-white dark:bg-custom-neutral-950">
             {isMobile?<MobileLayout/>:<DesktopLayout/>}
         </div>
     )

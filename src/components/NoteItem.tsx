@@ -13,7 +13,7 @@ interface Props{
 const NoteItem : React.FC<Props> = ({note, selected, onClick, desktopLayout, idx}) => {
 
     return(
-        <button onClick={onClick} name={String(idx)} className={`w-full flex flex-col gap-150 px-100 py-100 items-left rounded-6 text-preset-6 ${selected===String(idx)&&"bg-custom-neutral-100 dark:bg-custom-neutral-800"}`}>
+        <button onClick={onClick} name={String(idx)} className={`w-full flex flex-col gap-150 px-100 py-[10px] items-left rounded-6 text-preset-6 ${selected===String(idx)&&"bg-custom-neutral-100 dark:bg-custom-neutral-800"}`}>
             <h3 className="text-preset-3 font-semibold">{note.title}</h3>
             <ul className="flex gap-050">
                 {note.tags.map((tag,index) => {

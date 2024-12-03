@@ -20,7 +20,7 @@ const Header : React.FC<Props> = ({openedTab="Opened Tab",handleSearch}) => {
     // TODO- routing to settings
 
     return(
-        <div className="w-full px-400 flex border-b-1 border-custom-neutral-200 justify-between items-center h-[81px] dark:bg-custom-neutral-800">
+        <div className="w-full px-400 flex border-b-1 border-custom-neutral-200 justify-between items-center h-[81px] dark:border-custom-neutral-800">
             {/* Opened tab */}
             <h2 className='text-custom-neutral-950  text-preset-1 font-semibold dark:text-white '>{openedTab}</h2>
 
