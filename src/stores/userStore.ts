@@ -5,6 +5,7 @@ import { auth } from "../firebase/firebaseConfig"
 interface UserState{
     currentUser: null | User,
     loading: boolean,
+    authInitialized: boolean,
     login: (email: string, password: string) => Promise<void>,
     logout: () => Promise<void>,
     register: (email: string, password: string) => Promise<void>,
@@ -12,8 +13,9 @@ interface UserState{
 }
 
 export const useUserStore = create<UserState>((set) => ({
-    currentUser:null,
-    loading:true,
+    currentUser: null,
+    loading: true,
+    authInitialized: false,
 
     login: async (email, password) => {
         set({loading: true});
@@ -48,7 +50,7 @@ export const useUserStore = create<UserState>((set) => ({
     },
 
     setUser: (user : User | null) => {
-        set({currentUser: user});
+        set({currentUser: user, authInitialized: true});
     }
 }));
 

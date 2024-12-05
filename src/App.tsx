@@ -7,11 +7,22 @@ import Register from './pages/Register';
 import AllNotes from './pages/AllNotes';
 import ProtectedRoute from './routes/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
+import { useUserStore } from './stores/UserStore';
 
 function App() {
+  const { authInitialized } = useUserStore();
+
+    if (!authInitialized) {
+        return <div className='text-center'>Loading...</div>;
+    }
+
   return (
     <Router>
       <Routes>
+        <Route
+              index
+              element={<Navigate to="/dashboard"/>}
+        />
         <Route
           path='/dashboard'
           element={<ProtectedRoute replace={false}><Dashboard/></ProtectedRoute>}>
@@ -31,6 +42,10 @@ function App() {
             <Route
               path='/dashboard/tags'
               element={<div>tags</div>}
+            />
+            <Route
+              path='/dashboard/settings'
+              element={<div>settings</div>}
             />
         </Route>
         <Route
