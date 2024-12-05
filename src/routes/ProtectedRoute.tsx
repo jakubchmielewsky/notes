@@ -9,6 +9,8 @@ interface Props{
 const ProtectedRoute : React.FC<Props> = ({ children, replace}) => {
     const { currentUser } = useUserStore();
 
+    console.log(currentUser);
+
     if(!currentUser)
         return <Navigate to="/login" replace={replace}/>;
 

@@ -4,14 +4,9 @@ import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import Register from './pages/Register';
-import SettingsMenu from './components/desktopLayout/SettingsMenu';
-import SidebarNav from './components/desktopLayout/SidebarNav';
 import AllNotes from './pages/AllNotes';
-import Note from './components/Note';
 import ProtectedRoute from './routes/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
-
-{/*  */}
 
 function App() {
   return (
@@ -19,11 +14,11 @@ function App() {
       <Routes>
         <Route
           path='/dashboard'
-          element={<ProtectedRoute replace={true}><Dashboard/></ProtectedRoute>}>
+          element={<ProtectedRoute replace={false}><Dashboard/></ProtectedRoute>}>
             {/*nested routes*/}
             <Route
               index
-              element={<Navigate to="/dashboard/allnotes" replace/>}
+              element={<Navigate to="/dashboard/allnotes"/>}
             />
             <Route
               path='/dashboard/allnotes'

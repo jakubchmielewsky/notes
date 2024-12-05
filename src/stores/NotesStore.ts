@@ -1,6 +1,6 @@
 import {create} from "zustand";
 import { useUserStore } from "./UserStore";
-import { collection, onSnapshot, query, where, addDoc, doc, updateDoc, deleteDoc } from "firebase/firestore";
+import { collection, onSnapshot, query, where, addDoc, doc, updateDoc, deleteDoc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 
 interface Note{
@@ -23,11 +23,15 @@ interface NotesState{
     addArchivedNote: (note: {title: string , tags: string[], text: string, lastEdited: Date}) => Promise<void>,
     editArchivedNote: (id: string, editedNote: {title: string , tags: string[], text: string, lastEdited: Date}) => Promise<void>,
     deleteArchivedNote: (id: string) => Promise<void>,
+    moveToArchive: (id: string) => Promise<void>,
+    restoreFromArchive: (id: string) => Promise<void>,
 }
 
-export const useNotesStore = create<NotesState> ((set) => ({
+export const useNotesStore = create<NotesState  & { unsubscribeNotes?: Function | null, unsubscribeArchivedNotes?: Function | null}> ((set) => ({
     notes: [],
     archivedNotes: [],
+    unsubscribeNotes: null,
+    unsubscribeArchivedNotes: null,
 
     getNotes:  () => {
         const currentUser = useUserStore.getState().currentUser;
@@ -50,12 +54,17 @@ export const useNotesStore = create<NotesState> ((set) => ({
                     lastEdited: doc.data().lastEdited.toDate(),
                 }));
 
-                set({notes: notesData});
-
-                return unsubscribe;
+                set((state) => {
+                    if (JSON.stringify(state.notes) !== JSON.stringify(notesData)) {
+                        return { notes: notesData };
+                    }
+                    return state;
+                });
             },(error)=>{
                 console.error(error);
             });
+
+            set({unsubscribeNotes: unsubscribe});
         } catch (error) {
             console.error(error);
         }
@@ -104,7 +113,7 @@ export const useNotesStore = create<NotesState> ((set) => ({
 
         try {
             const unsubscribe = onSnapshot(q,(snapshot) => {
-                const notesData = snapshot.docs.map((doc) => ({
+                const archivedNotesData = snapshot.docs.map((doc) => ({
                     id: doc.id,
                     uid: doc.data().uid,
                     title: doc.data().title,
@@ -113,12 +122,17 @@ export const useNotesStore = create<NotesState> ((set) => ({
                     lastEdited: doc.data().lastEdited.toDate(),
                 }));
 
-                set({archivedNotes: notesData});
-
-                return unsubscribe;
+                set((state) => {
+                    if (JSON.stringify(state.archivedNotes) !== JSON.stringify(archivedNotesData)) {
+                        return { archivedNotes: archivedNotesData };
+                    }
+                    return state;
+                });
             },(error)=>{
                 console.error(error);
             });
+
+            set({unsubscribeArchivedNotes: unsubscribe});
         } catch (error) {
             console.error(error);
         }
@@ -130,8 +144,8 @@ export const useNotesStore = create<NotesState> ((set) => ({
         const uid = currentUser?.uid;
 
         try {
-            const notesRef = collection(db, 'archived_notes');
-            await addDoc(notesRef, {uid, ...note})
+            const archivedNoteRef = collection(db, 'archived_notes');
+            await addDoc(archivedNoteRef, {uid, ...note})
         } catch (error) {
             console.error(error);
         }
@@ -139,8 +153,8 @@ export const useNotesStore = create<NotesState> ((set) => ({
 
      editArchivedNote: async (id, editedNote) => {
         try {
-            const noteRef = doc(db,'archived_notes',id);
-            await updateDoc(noteRef, editedNote);
+            const archivedNoteRef = doc(db,'archived_notes',id);
+            await updateDoc(archivedNoteRef, editedNote);
         } catch (error) {
             console.error(error);
         }
@@ -148,12 +162,40 @@ export const useNotesStore = create<NotesState> ((set) => ({
 
      deleteArchivedNote: async (id) => {
         try {
-            const noteRef = doc(db,'archived_notes',id);
-            await deleteDoc(noteRef);
+            const archivedNoteRef = doc(db,'archived_notes',id);
+            await deleteDoc(archivedNoteRef);
         } catch (error) {
             console.error(error);
         }
      },
 
-    
+     moveToArchive: async (id) => {
+        try{
+            const noteRef = doc(db, 'notes', id);
+            const noteSnapshot = await getDoc(noteRef);
+            const noteData = noteSnapshot.data();
+
+            if (noteData) {
+                await addDoc(collection(db, 'archived_notes'), noteData);
+                await deleteDoc(noteRef);
+              }
+        } catch (error) {
+            console.error(error);
+        }
+     },
+
+     restoreFromArchive: async (id) => {
+        try {
+            const archivedNoteRef = doc(db, 'archived_notes', id);
+            const archivedNoteSnapshot = await getDoc(archivedNoteRef);
+            const archivedNoteData = archivedNoteSnapshot.data();
+
+            if (archivedNoteData){
+                await addDoc(collection(db, 'notes'), archivedNoteData);
+                await deleteDoc(archivedNoteRef);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+     },
 }))
