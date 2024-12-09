@@ -1,9 +1,8 @@
-import Note from "../components/Note"
-import NotesList from "../components/NotesList"
-import RightMenu from "../components/desktopLayout/RightMenu"
+import Note from "../../components/Note"
+import NotesList from "../../components/NotesList"
+import RightMenu from "../../components/desktopLayout/RightMenu"
 
-const AllNotes : React.FC = () => {
-
+const Notes : React.FC = () => {
     return(
         <div className="flex h-full">
                     <NotesList/>
@@ -18,4 +17,4 @@ const AllNotes : React.FC = () => {
     )
 }
 
-export default AllNotes;
+export default Notes;

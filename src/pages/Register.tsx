@@ -16,17 +16,14 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
   const {register} =useUserStore();
 
-  // Toggles the visibility of the password field
   const toggleShowPassword = () => setShowPassword((prev) => !prev);
 
-  // Handles form input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    setError({ ...error, [name]: "" }); // Clear field-specific errors on change
+    setError({ ...error, [name]: "" });
   };
 
-  // Validates the form
   const validate = (): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -40,13 +37,10 @@ const Register: React.FC = () => {
     return isValid;
   };
 
-  // Handles form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (validate()) {
-      console.log("Form submitted:", formData);
-      
       register(formData.email, formData.password);
       navigate("/dashboard");
     }
@@ -56,19 +50,15 @@ const Register: React.FC = () => {
     <div className="h-screen flex items-center justify-center bg-custom-neutral-100 px-200 py-100 font-inter dark:bg-custom-neutral-700">
       <div className="container max-w-[540px] tablet:px-600 flex flex-col gap-200 bg-white border-1 border-custom-neutral-200 px-200 py-600 rounded-12 dark:bg-custom-neutral-950 dark:border-custom-neutral-700">
 
-        {/* Logo Section */}
         <div>
           <Logo className="m-auto current-color dark:text-white" />
         </div>
 
-        {/* Header */}
         <FormHeader title='Create Your Account' subtitle='Sign up to start organizing your notes and boost your productivity.'/>
 
-        {/* Login Form */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-200 pt-300">
           <EmailInput value={formData.email} onChange={handleInputChange} errorMessage={error.email}/>
 
-          {/* Password Input */}
           <PasswordInput
             value={formData.password}
             onChange={handleInputChange}
@@ -77,7 +67,6 @@ const Register: React.FC = () => {
             hintVisible={true}
           />
 
-          {/* Submit Button */}
           <button type="submit" className="w-full bg-custom-blue-500 px-200 py-150 rounded-8 text-white hover:bg-custom-blue-700 focus:outline outline-offset-2 outline-2 outline-custom-neutral-400">Sign Up</button>
         </form>
 
@@ -92,8 +81,7 @@ const Register: React.FC = () => {
 
         <div className="border-t-1 dark:border-custom-neutral-800"></div>
 
-        {/* Login Link */}
-        <p className="text-preset-5 text-center text-custom-neutral-600 dark:text-custom-neutral-300">Already have an account? <Link to="/register" className="text-custom-neutral-950 dark:text-custom-neutral-200 hover:text-custom-blue-500">Login</Link></p>
+        <p className="text-preset-5 text-center text-custom-neutral-600 dark:text-custom-neutral-300">Already have an account? <Link to="/login" className="text-custom-neutral-950 dark:text-custom-neutral-200 hover:text-custom-blue-500">Login</Link></p>
       </div>
     </div>
   );

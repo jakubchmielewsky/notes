@@ -1,26 +1,25 @@
 import {ReactComponent as ChevronRight} from './../../assets/images/icon-chevron-right.svg';
 
-console.log(typeof ChevronRight);
-
 interface Props{
     name: string;
     Icon: any;
-    selected: String;
-    onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
+    id: string;
+    onClick: ( e: React.MouseEvent<HTMLButtonElement>) => void,
+    active: boolean,
 }
 
-const MenuItem : React.FC<Props> = ({name,Icon,selected,onClick}) => {
+const MenuItem : React.FC<Props> = ({name, Icon, onClick, active}) => {
 
     return(
-        <button name={name} 
+        <button 
             className={`flex justify-between w-full px-150 py-[10px] text-preset-4 rounded-8 dark:text-custom-neutral-200 
-                ${selected===name&& 'bg-custom-neutral-100 dark:bg-custom-neutral-700'}`}
-            onClick={onClick}
+                ${active&& 'bg-custom-neutral-100 dark:bg-custom-neutral-700'}`}
+            onClick={(e)=>onClick(e)}
         >
             <div className='flex items-center gap-100'>
-                <Icon className={`w-[20px] h-[20px] ${selected===name&& 'text-custom-blue-500'}`}/> {name} 
+                <Icon className={`w-[20px] h-[20px] ${active&& 'text-custom-blue-500'}`}/> {name} 
             </div>
-            {selected===name&&<ChevronRight className="w-[20px] h-[20px] dark:text-custom-neutral-200"/>}
+            {active&&<ChevronRight className="w-[20px] h-[20px] dark:text-custom-neutral-200"/>}
         </button>
     )
 }

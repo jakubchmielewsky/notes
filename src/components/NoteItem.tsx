@@ -7,7 +7,7 @@ interface Props{
     selected: string,
     onClick: (e: React.MouseEvent<HTMLButtonElement>) => void,
     desktopLayout: boolean,
-    idx: number,
+    idx: string,
 }
 
 const NoteItem : React.FC<Props> = ({note, selected, onClick, desktopLayout, idx}) => {

@@ -4,18 +4,50 @@ import Login from './pages/Login';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import Register from './pages/Register';
-import AllNotes from './pages/AllNotes';
+import Notes from './pages/desktop/Notes';
 import ProtectedRoute from './routes/ProtectedRoute';
-import Dashboard from './pages/Dashboard';
 import { useUserStore } from './stores/UserStore';
+import { useEffect, useState } from 'react';
+import { useNotesStore } from './stores/NotesStore';
+import DesktopDashboard from './pages/desktop/DesktopDashboard';
 
 function App() {
   const { authInitialized } = useUserStore();
+  const { currentUser } = useUserStore();
+  const { getNotes, unsubscribeNotes} = useNotesStore();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
 
-    if (!authInitialized) {
-        return <div className='text-center'>Loading...</div>;
+
+  useEffect(() => {
+    if (currentUser) {
+      getNotes();
     }
 
+    return () => {
+      if (unsubscribeNotes) unsubscribeNotes();
+    };
+
+  // eslint-disable-next-line
+  }, [currentUser]);
+
+  useEffect(() => {
+      const handleResize = () => {
+          setIsMobile(window.innerWidth < 900);
+      };
+
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  
+
+
+
+
+
+  if (!authInitialized) {
+      return <div className='text-center'>Loading...</div>;
+  }
   return (
     <Router>
       <Routes>
@@ -25,23 +57,15 @@ function App() {
         />
         <Route
           path='/dashboard'
-          element={<ProtectedRoute replace={false}><Dashboard/></ProtectedRoute>}>
+          element={<ProtectedRoute replace={false}>{isMobile?null:<DesktopDashboard/>}</ProtectedRoute>}>
             {/*nested routes*/}
             <Route
               index
-              element={<Navigate to="/dashboard/allnotes"/>}
+              element={<Navigate to="/dashboard/notes"/>}
             />
             <Route
-              path='/dashboard/allnotes'
-              element={<AllNotes/>}
-            />
-            <Route
-              path='/dashboard/archivednotes'
-              element={<div>archived</div>}
-            />
-            <Route
-              path='/dashboard/tags'
-              element={<div>tags</div>}
+              path='/dashboard/notes'
+              element={<Notes/>}
             />
             <Route
               path='/dashboard/settings'

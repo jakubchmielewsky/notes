@@ -23,20 +23,21 @@ const SettingsMenu : React.FC = () => {
     ]
 
     return(
-        <ul className="h-full w-[258px] py-250 pl-400 pr-200 flex flex-col gap-100 border-r-1 text-custom-neutral-950 border-custom-neutral-200 dark:text-custom-neutral-200    dark:bg-custom-neutral-950">
-            {options.map((option,index)=>{
-                return(
-                    <li key={index}>
-                        <MenuItem name={option.name} selected={option.selected} onClick={option.onClick} Icon={option.icon}/>
-                    </li>
-                )
-            })}
+        // <ul className="h-full w-[258px] py-250 pl-400 pr-200 flex flex-col gap-100 border-r-1 text-custom-neutral-950 border-custom-neutral-200 dark:text-custom-neutral-200    dark:bg-custom-neutral-950">
+        //     {options.map((option,index)=>{
+        //         return(
+        //             <li key={index}>
+        //                 <MenuItem name={option.name} selected={option.selected} onClick={option.onClick} Icon={option.icon}/>
+        //             </li>
+        //         )
+        //     })}
 
-            <div className="border-t-1 border-custom-neutral-200 dark:border-custom-neutral-800"></div>
+        //     <div className="border-t-1 border-custom-neutral-200 dark:border-custom-neutral-800"></div>
 
-            <MenuItem name={"Logout"} selected={selected} onClick={logout} Icon={Logout}/>
+        //     <MenuItem name={"Logout"} selected={selected} onClick={logout} Icon={Logout}/>
 
-        </ul>
+        // </ul>
+        <></>
     )
 }
 

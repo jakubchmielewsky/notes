@@ -1,3 +1,4 @@
+import { useNotesStore } from "../stores/NotesStore";
 import {ReactComponent as Plus} from "./../assets/images/icon-plus.svg";
 import NoteItem from "./NoteItem";
 import { useState } from "react";
@@ -31,6 +32,11 @@ const testNotes = [
   
 
 const NotesList = ({desktopLayout=true}) => {
+    const {getFilteredNotes} = useNotesStore();
+    const notes=getFilteredNotes();
+    
+
+
     const [selected,setSelected] = useState("");
 
     const handleClick = (e:React.MouseEvent<HTMLButtonElement>) => {
@@ -52,10 +58,10 @@ const NotesList = ({desktopLayout=true}) => {
 
             <ul className="overflow-y-auto divide-y divide-custom-neutral-100 dark:divide-custom-neutral-800">
                {
-                testNotes.map((note, index)=>{
+                notes?.map((note)=>{
                     return(
-                        <li key={index}>
-                            <NoteItem note={note} selected={selected} onClick={handleClick} desktopLayout={desktopLayout} idx={index}/>
+                        <li key={note.id}>
+                            <NoteItem note={note} selected={selected} onClick={handleClick} desktopLayout={desktopLayout} idx={note.id}/>
                         </li>
                     )
                 })
