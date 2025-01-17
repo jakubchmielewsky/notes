@@ -51,16 +51,18 @@ function App() {
         // eslint-disable-next-line
     }, [currentUser]);
 
-    useEffect(() => {
+    useEffect(()=>{
         initializeSettings();
+    },[initializeSettings])
 
+    useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth < 1024);
         };
 
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
-    }, [initializeSettings]);
+    }, []);
 
     useEffect(() => {
         const htmlElement = document.documentElement;
@@ -88,7 +90,7 @@ function App() {
             htmlElement.classList.add('font-source-code-pro');
         }
     
-      }, [theme, font]);
+    }, [theme, font]);
 
     if(!authInitialized || !notes){
         return <>Loading</>
@@ -168,10 +170,7 @@ function App() {
                     </Route>
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
-                    <Route
-                        path="/forgotpassword"
-                        element={<ForgotPassword />}
-                    />
+                    <Route path="/forgotpassword" element={<ForgotPassword />} />
                     <Route path="/resetpassword" element={<ResetPassword />} />
                     {/* <Route path="*" element={<Navigate to="/home" />} /> */}
                 </Routes>
