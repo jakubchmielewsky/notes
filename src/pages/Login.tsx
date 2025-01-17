@@ -9,14 +9,11 @@ import FormHeader from '../components/authForms/FormHeader';
 import { useUserStore } from '../stores/UserStore';
 
 const Login: React.FC = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState({ email: "", password: "" });
 
   const {login} = useUserStore();
   const navigate = useNavigate();
-
-  const toggleShowPassword = () => setShowPassword((prev) => !prev);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -37,12 +34,12 @@ const Login: React.FC = () => {
     return isValid;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (validate()) {
-      login(formData.email, formData.password);
-      navigate("/dashboard");
+      await login(formData.email, formData.password);
+      navigate("/home");
 
     }
   };
@@ -63,8 +60,6 @@ const Login: React.FC = () => {
           <PasswordInput
             value={formData.password}
             onChange={handleInputChange}
-            showPassword={showPassword}
-            toggleShowPassword={toggleShowPassword}
             hintVisible={false}
             forgotPasswordLink='/forgotpassword'
           />

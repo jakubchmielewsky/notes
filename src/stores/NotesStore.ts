@@ -9,6 +9,7 @@ import {
     doc,
     updateDoc,
     deleteDoc,
+    orderBy,
 } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 import { NoteType } from "../types/types";
@@ -18,11 +19,12 @@ import { NoteType } from "../types/types";
 
 interface NotesState {
     notes: NoteType[] | null;
+    activeNote: NoteType | null;
     filters: { view: string; tag: string; query: string };
     setFilter: (key: string, value: string) => void;
-    activeTabId: string;
+    notesInitialized: boolean;
+    setActiveNote: (note : NoteType)=>void;
     unsubscribeNotes?: Function | null;
-    getFilteredNotes: () => NoteType[] | undefined | null;
     getNotes: () => void;
     addNote: (data: {
         title: string;
@@ -30,29 +32,18 @@ interface NotesState {
         text: string;
         lastEdited: Date;
     }) => Promise<void>;
-    editNote: (
-        id: string,
-        editedNote: {
-            title: string;
-            tags: string[];
-            text: string;
-            lastEdited: Date;
-            archived: boolean;
-        }
-    ) => Promise<void>;
+    editNote: ( editedNote: NoteType) => Promise<void>;
     deleteNote: (id: string) => Promise<void>;
 }
 
 export const useNotesStore = create<NotesState>((set, get) => ({
     notes: [],
+    activeNote: null,
     filters: {
-        view: "all", // 'all', 'settings' lub 'archived'
+        view: "all", // 'all' lub 'archived'
         tag: "",
         query: "",
     },
-    activeTabId: "",
-    unsubscribeNotes: null,
-
     setFilter: (key, value) => {
         if (key === "view" && value === "archived") {
             set((state) => ({
@@ -79,26 +70,13 @@ export const useNotesStore = create<NotesState>((set, get) => ({
             },
         }));
     },
-
-    getFilteredNotes: () => {
-        const { notes, filters } = get();
-
-        if (filters.view === "archived")
-            return notes?.filter((note) => note.archived === true);
-
-        if (filters.tag)
-            return notes?.filter((note) => note.tags.includes(filters.tag));
-
-        if (filters.query)
-            return notes?.filter(
-                (note) =>
-                    note.title.includes(filters.query) ||
-                    note.text.includes(filters.query) ||
-                    note.tags.includes(filters.query)
-            );
-
-        return notes;
+    notesInitialized: false,
+    setActiveNote:(note)=>{
+        set({activeNote:note});
     },
+    activeTabId: "",
+    unsubscribeNotes: null,
+
 
     getNotes: () => {
         const currentUser = useUserStore.getState().currentUser;
@@ -107,7 +85,7 @@ export const useNotesStore = create<NotesState>((set, get) => ({
 
         const uid = currentUser.uid;
         const notesRef = collection(db, "notes");
-        const q = query(notesRef, where("uid", "==", uid));
+        const q = query(notesRef, where("uid", "==", uid), orderBy("lastEdited", "desc"));
 
         try {
             const unsubscribe = onSnapshot(
@@ -132,6 +110,7 @@ export const useNotesStore = create<NotesState>((set, get) => ({
                         }
                         return state;
                     });
+                    set({notesInitialized: true});
                 },
                 (error) => {
                     console.error(error);
@@ -157,10 +136,10 @@ export const useNotesStore = create<NotesState>((set, get) => ({
         }
     },
 
-    editNote: async (id, editedNote) => {
+    editNote: async (editedNote) => {
         try {
-            const noteRef = doc(db, "notes", id);
-            await updateDoc(noteRef, editedNote);
+            const noteRef = doc(db, "notes", editedNote.id);
+            await updateDoc(noteRef, {...editedNote,lastEdited: new Date()});
         } catch (error) {
             console.error(error);
         }

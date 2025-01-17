@@ -12,7 +12,7 @@ const RightMenu: React.FC<Props> = ({ archive, restore, remove }) => {
     const buttonClasses = "w-full flex items-center px-150 py-200 gap-100 border-1 border-custom-neutral-300 rounded-8 dark:border-custom-neutral-600 hover:border-transparent hover:bg-custom-neutral-100 dark:hover:bg-custom-neutral-800 focus:border-custom-neutral-950 dark:focus:border-white focus:outline outline-offset-2 outline-2 outline-custom-neutral-400";
 
     return (
-        <div className="h-full w-full flex flex-col py-250 pl-200 mr-400 gap-150 text-preset-4 text-custom-neutral-950 border-l-1 border-custom-neutral-200 dark:border-custom-neutral-800  dark:text-white">
+        <div className="h-full w-full flex flex-col py-250 pl-200 gap-150 text-preset-4 text-custom-neutral-950 border-l-1 border-custom-neutral-200 dark:border-custom-neutral-800  dark:text-white">
             {archive&&<button
                 onClick={archive}
                 className={buttonClasses}

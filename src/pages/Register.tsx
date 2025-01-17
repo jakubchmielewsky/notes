@@ -9,14 +9,12 @@ import FormHeader from '../components/authForms/FormHeader';
 import { useUserStore } from '../stores/UserStore';
 
 const Register: React.FC = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState({ email: "", password: "" });
 
   const navigate = useNavigate();
   const {register} =useUserStore();
 
-  const toggleShowPassword = () => setShowPassword((prev) => !prev);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -37,12 +35,12 @@ const Register: React.FC = () => {
     return isValid;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (validate()) {
-      register(formData.email, formData.password);
-      navigate("/dashboard");
+      await register(formData.email, formData.password);
+      navigate("/home");
     }
   };
 
@@ -62,8 +60,6 @@ const Register: React.FC = () => {
           <PasswordInput
             value={formData.password}
             onChange={handleInputChange}
-            showPassword={showPassword}
-            toggleShowPassword={toggleShowPassword}
             hintVisible={true}
           />
 

@@ -5,16 +5,17 @@ interface Props{
     Icon: any;
     id: string;
     onClick: ( e: React.MouseEvent<HTMLButtonElement>) => void,
-    active: boolean,
+    active?: boolean,
 }
 
-const MenuItem : React.FC<Props> = ({name, Icon, onClick, active}) => {
+const MenuItem : React.FC<Props> = ({name, Icon, id, onClick, active =false}) => {
 
     return(
         <button 
             className={`flex justify-between w-full px-150 py-[10px] text-preset-4 rounded-8 dark:text-custom-neutral-200 
                 ${active&& 'bg-custom-neutral-100 dark:bg-custom-neutral-700'}`}
             onClick={(e)=>onClick(e)}
+            id={id}
         >
             <div className='flex items-center gap-100'>
                 <Icon className={`w-[20px] h-[20px] ${active&& 'text-custom-blue-500'}`}/> {name} 

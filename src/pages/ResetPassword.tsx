@@ -5,12 +5,8 @@ import PasswordInput from '../components/authForms/PasswordInput';
 import FormHeader from '../components/authForms/FormHeader';
 
 const ResetPassword: React.FC = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
   const [formData, setFormData] = useState({ password: "", confirm: "" });
 
-  const toggleShowPassword = () => setShowPassword((prev) => !prev);
-  const toggleShowConfirm = () => setShowConfirm((prev) => !prev);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -38,8 +34,6 @@ const ResetPassword: React.FC = () => {
             label='New Password'
             value={formData.password}
             onChange={handleInputChange}
-            showPassword={showPassword}
-            toggleShowPassword={toggleShowPassword}
             hintVisible={true }
           />
           <PasswordInput
@@ -48,8 +42,6 @@ const ResetPassword: React.FC = () => {
             name='confirm'
             value={formData.confirm}
             onChange={handleInputChange}
-            showPassword={showConfirm}
-            toggleShowPassword={toggleShowConfirm}
             hintVisible={false}
           />
 

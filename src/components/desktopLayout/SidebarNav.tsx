@@ -5,11 +5,15 @@ import { ReactComponent as Tag } from "./../../assets/images/icon-tag.svg";
 import { v4 as generateId } from "uuid";
 import MenuItem from "./MenuItem";
 import { useNotesStore } from "../../stores/NotesStore";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams} from "react-router-dom";
 
 const SidebarNav: React.FC = () => {
-    const { notes, setFilter, filters } = useNotesStore();
+    const { notes} = useNotesStore();
     const navigate = useNavigate();
+    const location = useLocation();
+    const params = useParams();
+    
+
 
     const aggregateTags = () => {
         let tagsCount: { [key: string]: number } = {};
@@ -47,24 +51,20 @@ const SidebarNav: React.FC = () => {
                     name="All Notes"
                     Icon={Home}
                     id={generateId()}
-                    onClick={() => {
-                        setFilter("view", "all");
-                        navigate("/dashboard/notes");
+                    onClick={(e) => {
+                        navigate("/home");
                     }}
-                    active={
-                        filters.view === "all" && !filters.tag && !filters.query
-                    }
+                    active = {location.pathname.includes("/home")}
                 />
 
                 <MenuItem
                     name="Archived Notes"
                     Icon={Archived}
                     id={generateId()}
-                    onClick={() => {
-                        setFilter("view", "archived");
-                        navigate("/dashboard/notes");
+                    onClick={(e) => {
+                        navigate("/archived");
                     }}
-                    active={filters.view === "archived"}
+                    active={location.pathname.includes("/archived")}
                 />
             </div>
 
@@ -80,10 +80,9 @@ const SidebarNav: React.FC = () => {
                                 Icon={Tag}
                                 id={tag.id}
                                 onClick={() => {
-                                    setFilter("tag", tag.text);
-                                    navigate("/dashboard/notes");
+                                    navigate(`/tag/${tag.text}`);
                                 }}
-                                active={filters.tag === tag.text}
+                                active={params.tagName === tag.text}
                             />
                         </li>
                     );

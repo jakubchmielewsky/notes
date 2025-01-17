@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as Show } from "./../../assets/images/icon-show-password.svg"; // Ensure the correct path
 import { ReactComponent as Hide } from "./../../assets/images/icon-hide-password.svg";
@@ -9,8 +9,6 @@ interface PasswordInputProps {
   name?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  showPassword: boolean;
-  toggleShowPassword: () => void;
   hintVisible?: boolean;
   placeholder?: string;
   label?: string;
@@ -23,13 +21,18 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
   name = "password",
   value,
   onChange,
-  showPassword,
-  toggleShowPassword,
   hintVisible = false,
   label = "Password",
   forgotPasswordLink = "",
   className = "",
 }) => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword((prev)=>!prev)
+  }
+
+
   return (
     <div className={`flex flex-col gap-075 ${className}`}>
       {/* Label with "Forgot Password" Link */}

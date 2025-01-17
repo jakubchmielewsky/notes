@@ -1,29 +1,34 @@
 import { ReactComponent as Search } from "./../../assets/images/icon-search.svg";
 import { ReactComponent as Settings } from "./../../assets/images/icon-settings.svg";
 import { useNotesStore } from "../../stores/NotesStore";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 
-const Header: React.FC = () => {
-    const { filters, setFilter } = useNotesStore();
+const Header: React.FC<{ className?: string }> = ({ className }) => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const { filters, setFilter } = useNotesStore();
+    const params = useParams();
 
     const setTitle = () => {
-        if (filters.view === "archived") {
-            return "Archived Notes";
-        } else if (filters.view=== "settings") {
-            return "Settings";
-        } else {
-            if (filters.query) return "Showing results for: " + filters.query;
-            else if (filters.tag) return "Notes Tagged: " + filters.tag;
-
+        if (location.pathname.includes("home")) {
             return "All Notes";
+        } else if (location.pathname.includes("archived")) {
+            return "Archived";
+        } else if (location.pathname.includes("tag")) {
+            return "Tagged: " + params.tagName;
+        } else if (location.pathname.includes("search")) {
+            return "Showing results for: " + filters.query;
+        } else if (location.pathname.includes("settings")) {
+            return "Settings";
         }
     };
 
     const pageTitle = setTitle();
 
     return (
-        <div className="w-full px-400 flex border-b-1 border-custom-neutral-200 justify-between items-center h-[81px] dark:border-custom-neutral-800">
+        <div
+            className={`w-full px-400 flex border-b-1 border-custom-neutral-200 justify-between items-center min-h-[81px] dark:border-custom-neutral-800 ${className}`}
+        >
             {/* Opened tab */}
             <h2 className="text-custom-neutral-950  text-preset-1 font-semibold dark:text-white ">
                 {pageTitle}
@@ -40,13 +45,15 @@ const Header: React.FC = () => {
                         placeholder="Search by title, content, or tags…"
                         value={filters.query}
                         onChange={(e) => {
-                            setFilter("query", e.target.value);
-                            navigate("/dashboard/notes");
+                            setFilter("query", e.currentTarget.value);
+                            navigate("/search");
                         }}
                         className="text-preset-5 w-full border-none outline-none shadow-none bg-transparent"
                     />
                 </div>
-                <Link to={"/dashboard/settings"} onClick={()=>setFilter("view","settings")}>
+                <Link
+                    to={"/settings"}
+                >
                     <Settings />
                 </Link>
             </div>
