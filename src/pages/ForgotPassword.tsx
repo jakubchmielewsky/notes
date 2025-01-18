@@ -1,17 +1,16 @@
 import { ReactComponent as Logo } from './../assets/images/logo.svg';
-
 import { useState } from 'react';
 import EmailInput from '../components/authForms/EmailInput';
 import FormHeader from '../components/authForms/FormHeader';
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth } from '../firebase/firebaseConfig';
 
 const ForgotPassword: React.FC = () => {
   const [formData, setFormData] = useState({ email: ""});
   const [error, setError] = useState({ email: "", password: "" });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    setError({ ...error, [name]: "" });
+    setFormData({ email: e.target.value });
   };
 
   const validate = (): boolean => {
@@ -27,12 +26,24 @@ const ForgotPassword: React.FC = () => {
     return isValid;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  console.log("render");
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    console.log("click");
+
     if (validate()) {
-
-
+      try {
+        await sendPasswordResetEmail(auth, formData.email);
+        //success
+        console.log("wyslano");
+      } catch (error) {
+        console.error(error);
+        //error
+      }
+    } else {
+      console.error("Incorrect email");
     }
   };
 

@@ -3,9 +3,16 @@ import { ReactComponent as Logo } from './../assets/images/logo.svg';
 import { useState } from 'react';
 import PasswordInput from '../components/authForms/PasswordInput';
 import FormHeader from '../components/authForms/FormHeader';
+import { confirmPasswordReset, verifyPasswordResetCode } from 'firebase/auth';
+import { auth } from '../firebase/firebaseConfig';
+import { useNavigate } from 'react-router-dom';
 
 const ResetPassword: React.FC = () => {
   const [formData, setFormData] = useState({ password: "", confirm: "" });
+  const navigate = useNavigate();
+
+    const params = new URLSearchParams(window.location.search);
+    const oobCode = params.get('oobCode');
 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -13,8 +20,33 @@ const ResetPassword: React.FC = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validate = () => {
+    if(formData.password===formData.confirm) return true;
+
+    return false;
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if(validate()){
+      try {
+        if(oobCode){
+          await verifyPasswordResetCode(auth, oobCode);
+        } else {
+          throw Error("No oobCode");
+        }
+        
+        await confirmPasswordReset(auth, oobCode, formData.password)
+
+        console.log("passwords changed successfully");
+        navigate("/login");
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    
 
     
   };
