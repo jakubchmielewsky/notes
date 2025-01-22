@@ -22,7 +22,7 @@ const NewNote : React.FC = ()=>{
         const newNote = {
             title: inputs.title,
             text: inputs.text,
-            tags: inputs.tags.split(","),
+            tags: inputs.tags.toLocaleLowerCase().split(","),
             lastEdited: new Date(),
         };
         addNote(newNote);

@@ -50,7 +50,7 @@ const NoteDesktop: React.FC = () => {
             ...note,
             title: inputs.title,
             text: inputs.text,
-            tags: inputs.tags.split(","),
+            tags: inputs.tags.toLocaleLowerCase().split(","),
         };
         editNote(editedNote);
     };

@@ -7,6 +7,8 @@ import EmailInput from '../components/authForms/EmailInput';
 import PasswordInput from '../components/authForms/PasswordInput';
 import FormHeader from '../components/authForms/FormHeader';
 import { useUserStore } from '../stores/UserStore';
+import { signInWithPopup } from 'firebase/auth';
+import { auth, googleAuthProvider } from '../firebase/firebaseConfig';
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -44,6 +46,15 @@ const Login: React.FC = () => {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      await signInWithPopup(auth, googleAuthProvider);
+      navigate("/home");
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <div className="h-screen flex items-center justify-center bg-custom-neutral-100 px-200 py-100 font-inter dark:bg-custom-neutral-700">
       <div className="container max-w-[540px] tablet:px-600 flex flex-col gap-200 bg-white border-1 border-custom-neutral-200 px-200 py-600 rounded-12 dark:bg-custom-neutral-950 dark:border-custom-neutral-700">
@@ -70,7 +81,7 @@ const Login: React.FC = () => {
         {/* Alternative Login */}
         <div className="flex flex-col gap-200 pt-300 text-center border-t-1 dark:border-custom-neutral-800">
           <p className="text-preset-5 text-custom-neutral-600 dark:text-custom-neutral-300">Or log in with:</p>
-          <button className="flex justify-center items-center gap-200 border-1 border-custom-neutral-300 py-150 rounded-12 text-preset-3 font-medium hover:bg-custom-neutral-50     dark:text-white dark:border-custom-neutral-600 hover:dark:bg-custom-neutral-700">
+          <button onClick={handleGoogleLogin} className="flex justify-center items-center gap-200 border-1 border-custom-neutral-300 py-150 rounded-12 text-preset-3 font-medium hover:bg-custom-neutral-50     dark:text-white dark:border-custom-neutral-600 hover:dark:bg-custom-neutral-700">
             <Google className="w-[24px] h-[24px] current-color dark:text-white" />
             Google
           </button>

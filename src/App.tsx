@@ -2,6 +2,7 @@ import {
     BrowserRouter as Router,
     Route,
     Routes,
+    Navigate,
 } from "react-router-dom";
 import "./App.css";
 import Login from "./pages/Login";
@@ -30,6 +31,7 @@ import SettingsDesktop from "./pages/desktop/SettingsDesktop";
 import Setting from "./pages/Setting";
 import { useSettingsStore } from "./stores/SettingsStore";
 import NewNoteDesktop from "./pages/desktop/NewNoteDesktop";
+import Loading from "./components/Loading";
 
 
 function App() {
@@ -93,7 +95,7 @@ function App() {
     }, [theme, font]);
 
     if(!authInitialized || !notes){
-        return <>Loading</>
+        return <Loading/>
     }
 
     return (
@@ -111,6 +113,8 @@ function App() {
                             </ProtectedRoute>
                         }
                     >
+                        <Route index element={<Navigate to="/home"/>}/>
+                        
                         <Route
                             path="/home"
                             element={isMobile ? <Home /> : <HomeDesktop />}
@@ -172,7 +176,7 @@ function App() {
                     <Route path="/register" element={<Register />} />
                     <Route path="/forgotpassword" element={<ForgotPassword />} />
                     <Route path="/resetpassword" element={<ResetPassword />} />
-                    {/* <Route path="*" element={<Navigate to="/home" />} /> */}
+                    <Route path="*" element={<Navigate to="/home" />} />
                 </Routes>
         </Router>
     );
