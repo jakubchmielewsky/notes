@@ -4,11 +4,33 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNotesStore } from "../../stores/NotesStore";
 import RightMenu from "../../components/desktopLayout/RightMenu";
+import Modal from "../../components/Modal";
+import { ReactComponent as DeleteIcon } from "../../assets/images/icon-delete.svg";
+import { ReactComponent as ArchiveIcon } from "../../assets/images/icon-archive.svg";
+
+interface ModalState {
+    isActive: boolean;
+    icon: React.FC<React.SVGProps<SVGSVGElement>> | null;
+    title: string;
+    description: string;
+    buttonColor: string;
+    onClick: () => void;
+}
+
+
 
 const NoteDesktop: React.FC = () => {
     const { notes, deleteNote, editNote } = useNotesStore();
     const navigate = useNavigate();
     const params = useParams();
+    const [modal, setModal] = useState<ModalState>({
+            isActive: false,
+            icon: null,
+            title: "",
+            description: "",
+            buttonColor: "",
+            onClick: () => {},
+        });
 
     const note = notes?.find((item) => item.id === params.noteId) || null;
 
@@ -26,13 +48,34 @@ const NoteDesktop: React.FC = () => {
 
     if (!note) return <Navigate to={"/home"} />;
 
+    const resetModal = () => {
+        setModal({isActive: false, icon: null, title: "", description: "", buttonColor: "", onClick: ()=>{}});
+    }
     const handleDelete = () => {
-        deleteNote(note.id);
-        navigate(-1);
+        setModal({
+            isActive: true, 
+            icon: DeleteIcon, 
+            title: "Delete Note", 
+            description: "Are you sure you want to permanently delete this note? This action cannot be undone.",
+            buttonColor: "custom-red-500",
+            onClick: () => {
+                deleteNote(note.id);
+                navigate(-1);
+            }
+        })
     };
     const handleArchive = () => {
-        editNote({ ...note, archived: true });
-        navigate(-1);
+        setModal({
+            isActive: true, 
+            icon: ArchiveIcon, 
+            title: "Archive Note", 
+            description: "Are you sure you want to archive this note? You can find it in the Archived Notes section and restore it anytime.",
+            buttonColor: "custom-blue-500",
+            onClick: () => {
+                editNote({ ...note, archived: true });
+                navigate(-1);
+            }
+        })
     };
     const handleRestore = () => {
         editNote({ ...note, archived: false });
@@ -132,6 +175,17 @@ const NoteDesktop: React.FC = () => {
                     <RightMenu archive={handleArchive} remove={handleDelete} />
                 )}
             </div>
+            {modal.isActive&& 
+                <Modal 
+                    icon={modal.icon} 
+                    title={modal.title} 
+                    description={modal.description} 
+                    buttonColor={modal.buttonColor} 
+                    onSubmit={modal.onClick}
+                    resetModal={resetModal}
+
+                />
+            }
         </div>
     );
 };
