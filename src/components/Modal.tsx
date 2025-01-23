@@ -9,6 +9,7 @@ interface ModalProps{
 }
 
 const Modal: React.FC<ModalProps> = ({icon: Icon, title, description, buttonColor, onSubmit, resetModal}) => {
+    console.log(buttonColor);
     return ( 
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 px-150">
             <div className="max-w-[440px] bg-white rounded-12 border-1 border-custom-neutral-200 divide-y-1 divide-custom-neutral-200 dark:bg-custom-neutral-700 dark:border-custom-neutral-600 divide-custom-neutral-600">

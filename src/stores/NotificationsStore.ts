@@ -8,7 +8,7 @@ interface NotificationsStore{
 }
 
 export const useNotificationsStore = create<NotificationsStore>(set=>({
-    notifications: [{id:"1234", message: "test notification", type:"success"},{id:"12345", message: "test notification", type:"success"}],
+    notifications: [],
 
     addNotification: (notification) => {
         set((state) => ({

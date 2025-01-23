@@ -71,7 +71,12 @@ const SidebarNav: React.FC = () => {
             <div className="border-t-1 dark:border-custom-neutral-800"></div>
             <h3 className="px-100 text-custom-neutral-500">Tags</h3>
 
-            <ul className="flex flex-col gap-050">
+            <ul className="flex flex-col gap-050 
+                overflow-y-auto
+                [&::-webkit-scrollbar]:w-1.5
+                [&::-webkit-scrollbar-track]:bg-transparent
+                [&::-webkit-scrollbar-thumb]:bg-custom-neutral-200
+                dark:[&::-webkit-scrollbar-thumb]:bg-custom-neutral-800">
                 {aggregateTags()?.map((tag) => {
                     return (
                         <li key={tag.id}>

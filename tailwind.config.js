@@ -4,6 +4,10 @@ module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
+  safelist: [
+    'bg-custom-red-500',
+    'bg-custom-blue-500',
+  ],
   darkMode: 'class',
   theme: {
     extend: {
