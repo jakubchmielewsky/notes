@@ -73,7 +73,7 @@ const Tags: React.FC = () => {
                             <NotesList
                                 desktopLayout={false}
                                 filteredNotes={filteredNotes}
-                                route="/tag"
+                                route={`/tag/${selectedTag}`}
                             />
 
                             <button
