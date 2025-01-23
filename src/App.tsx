@@ -37,7 +37,7 @@ import Loading from "./components/Loading";
 function App() {
     const { authInitialized, currentUser } = useUserStore();
     const { getNotes, unsubscribeNotes, notes } = useNotesStore();
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 1025);
     const {theme, font, initializeSettings} = useSettingsStore();
 
     
@@ -114,7 +114,7 @@ function App() {
                         }
                     >
                         <Route index element={<Navigate to="/home"/>}/>
-                        
+
                         <Route
                             path="/home"
                             element={isMobile ? <Home /> : <HomeDesktop />}

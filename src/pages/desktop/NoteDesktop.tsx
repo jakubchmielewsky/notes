@@ -7,6 +7,8 @@ import RightMenu from "../../components/desktopLayout/RightMenu";
 import Modal from "../../components/Modal";
 import { ReactComponent as DeleteIcon } from "../../assets/images/icon-delete.svg";
 import { ReactComponent as ArchiveIcon } from "../../assets/images/icon-archive.svg";
+import { useNotificationsStore } from "../../stores/NotificationsStore";
+import { NotificationType } from "../../types/types";
 
 interface ModalState {
     isActive: boolean;
@@ -30,7 +32,9 @@ const NoteDesktop: React.FC = () => {
             description: "",
             buttonColor: "",
             onClick: () => {},
-        });
+    });
+
+    const {addNotification} = useNotificationsStore();
 
     const note = notes?.find((item) => item.id === params.noteId) || null;
 
@@ -61,6 +65,8 @@ const NoteDesktop: React.FC = () => {
             onClick: () => {
                 deleteNote(note.id);
                 navigate(-1);
+                const notification: NotificationType = {id: Date.now().toString(), message: "Note deleted.", type: "success"};
+                addNotification(notification);
             }
         })
     };
@@ -74,12 +80,16 @@ const NoteDesktop: React.FC = () => {
             onClick: () => {
                 editNote({ ...note, archived: true });
                 navigate(-1);
+                const notification: NotificationType = {id: Date.now().toString(), message: "Note archived.", type: "success"};
+                addNotification(notification);
             }
         })
     };
     const handleRestore = () => {
         editNote({ ...note, archived: false });
         navigate(-1);
+        const notification: NotificationType = {id: Date.now().toString(), message: "Note restored.", type: "success"};
+        addNotification(notification);
     };
     const handleCancel = () => {
         setInputs({
@@ -96,6 +106,8 @@ const NoteDesktop: React.FC = () => {
             tags: inputs.tags.toLocaleLowerCase().split(","),
         };
         editNote(editedNote);
+        const notification: NotificationType = {id: Date.now().toString(), message: "Note successfully saved.", type: "success"};
+        addNotification(notification);
     };
 
     return (

@@ -1,6 +1,7 @@
 import Header from "../../components/desktopLayout/Header";
 import SidebarNav from "../../components/desktopLayout/SidebarNav"
 import { Outlet } from "react-router-dom";
+import NotificationsContainer from "../../components/NotificationsContainer";
 
 const DesktopLayout = () => {
 
@@ -13,6 +14,7 @@ const DesktopLayout = () => {
                 <Outlet/>
 
             </div>
+            <NotificationsContainer duration={4000}/>
         </div>
     )
 }

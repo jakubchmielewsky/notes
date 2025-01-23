@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
@@ -10,6 +11,20 @@ module.exports = {
         'inter': ['Inter', 'sans-serif'],
         'noto-serif': ['Noto Serif', 'serif'],
         'source-code-pro': ['Source Code Pro', 'monospace'],
+      },
+
+      keyframes: {
+        notificationAnimation: {
+          '0%': { opacity: '0', transform: 'translate(130%,100%)' },
+          '5%': { opacity: '0', transform: 'translate(130%,0)' },
+          '15%': {opacity: '1', transform: 'translate(0,0)'},
+          '95%': {opacity: '1', transform: 'translate(0,0)'},
+          '100%': { opacity: '0', transform: 'translate(0,0)' },
+        },
+      },
+
+      animation: {
+        notificationAnimation: 'notificationAnimation 3s linear',
       },
 
       colors: {
@@ -90,7 +105,7 @@ module.exports = {
 
       screens: {
         'tablet': '540px',
-        'desktop': '900px',
+        'desktop': '1025px',
       },
 
       boxShadow: {

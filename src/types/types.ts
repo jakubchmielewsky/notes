@@ -7,3 +7,9 @@ export interface NoteType {
     lastEdited: Date;
     archived: boolean;
 }
+
+export interface NotificationType{
+    id: string,
+    message: string,
+    type: "success" | "error" | "info",
+}

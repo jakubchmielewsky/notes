@@ -2,6 +2,7 @@ import Header from "../../components/mobileLayout/Header";
 import { Outlet } from "react-router-dom";
 import MenuBar from "../../components/mobileLayout/MenuBar";
 import { useNotesStore } from "../../stores/NotesStore";
+import NotificationsContainer from "../../components/NotificationsContainer";
 
 const MobileLayout = () => {
     const {activeNote} = useNotesStore();
@@ -13,6 +14,7 @@ const MobileLayout = () => {
                 <Outlet context={activeNote}/>
             </div>
             <MenuBar/>
+            <NotificationsContainer duration={4000}/>
         </div>
     );
 };
