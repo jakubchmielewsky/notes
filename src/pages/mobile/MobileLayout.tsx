@@ -10,7 +10,11 @@ const MobileLayout = () => {
     return (
         <div className="h-screen w-screen overflow-hidden flex flex-col bg-white dark:bg-custom-neutral-950">
             <Header />
-            <div className="grow overflow-y-auto">
+            <div className="grow overflow-y-auto
+                [&::-webkit-scrollbar]:w-1.5
+                [&::-webkit-scrollbar-track]:bg-transparent
+                [&::-webkit-scrollbar-thumb]:bg-custom-neutral-200
+                dark:[&::-webkit-scrollbar-thumb]:bg-custom-neutral-800">
                 <Outlet context={activeNote}/>
             </div>
             <MenuBar/>

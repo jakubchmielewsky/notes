@@ -56,7 +56,7 @@ const Tags: React.FC = () => {
         <>
             {!isNoteOpen && (
                 <div
-                    className={`relative h-full flex flex-col px-200 pt-250 gap-200 w-full border-r-1 border-custom-neutral-200 dark:border-custom-neutral-800 dark:bg-custom-neutral-950 dark:text-white tablet:px-400 tablet:py-300`}
+                    className={`relative h-full flex flex-col px-200 pt-250 gap-200 w-full dark:bg-custom-neutral-950 dark:text-white tablet:px-400 tablet:py-300`}
                 >
                     {selectedTag ? (
                         <>
