@@ -66,13 +66,14 @@ const Login: React.FC = () => {
         <FormHeader title='Welcome to Note' subtitle='Please log in to continue'/>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-200 pt-300">
-          <EmailInput value={formData.email} onChange={handleInputChange} errorMessage={error.email}/>
+          <EmailInput value={formData.email} onChange={handleInputChange} errorMessage={error.email} label='Email Address (example@example.com)'/>
 
           <PasswordInput
             value={formData.password}
             onChange={handleInputChange}
             hintVisible={false}
             forgotPasswordLink='/forgotpassword'
+            label='Password (example1234)'
           />
 
           <button type="submit" className="w-full bg-custom-blue-500 px-200 py-150 rounded-8 text-white hover:bg-custom-blue-700 focus:outline outline-offset-2 outline-2 outline-custom-neutral-400">Login</button>
