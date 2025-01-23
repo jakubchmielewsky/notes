@@ -4,6 +4,8 @@ import HeaderControls from "../../components/mobileLayout/HeaderControls";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useNotesStore } from "../../stores/NotesStore";
+import { useNotificationsStore } from "../../stores/NotificationsStore";
+import { NotificationType } from "../../types/types";
 
 const NewNote : React.FC = ()=>{
     const navigate = useNavigate();
@@ -14,6 +16,8 @@ const NewNote : React.FC = ()=>{
         tags: "",
         text: "",
     });
+
+    const {addNotification} = useNotificationsStore();
 
     const handleGoBack = () => {
         navigate(-1);
@@ -27,6 +31,8 @@ const NewNote : React.FC = ()=>{
         };
         addNote(newNote);
         navigate('/home');
+        const notification: NotificationType = {id: Date.now().toString(), message: "Note successfully added.", type: "success"};
+        addNotification(notification);
     };
 
     return (

@@ -12,7 +12,7 @@ const Modal: React.FC<ModalProps> = ({icon: Icon, title, description, buttonColo
     console.log(buttonColor);
     return ( 
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 px-150">
-            <div className="max-w-[440px] bg-white rounded-12 border-1 border-custom-neutral-200 divide-y-1 divide-custom-neutral-200 dark:bg-custom-neutral-700 dark:border-custom-neutral-600 divide-custom-neutral-600">
+            <div className="max-w-[440px] bg-white rounded-12 border-1 border-custom-neutral-200 divide-y-1 divide-custom-neutral-200 dark:bg-custom-neutral-700 dark:border-custom-neutral-600 dark:divide-custom-neutral-600">
                 {/* top */}
                 <div className="flex px-200 py-200 gap-150">
                     <div className="bg-custom-neutral-100 min-w-[40px] h-[40px] rounded-8 flex justify-center items-center dark:bg-custom-neutral-600">
@@ -34,7 +34,7 @@ const Modal: React.FC<ModalProps> = ({icon: Icon, title, description, buttonColo
                         </button>
 
                          {/* primary button */}
-                        <button className={`w-[117px] bg-${buttonColor} px-200 py-150 rounded-8 text-preset-4 text-white hover:bg-custom-blue-700 focus:outline outline-offset-2 outline-2 outline-custom-neutral-400`} onClick={()=>{onSubmit(); resetModal();}}>
+                        <button className={`w-[117px] bg-${buttonColor} px-200 py-150 rounded-8 text-preset-4 text-white focus:outline outline-offset-2 outline-2 outline-custom-neutral-400`} onClick={()=>{onSubmit(); resetModal();}}>
                                 {title}
                         </button>
                 </div>

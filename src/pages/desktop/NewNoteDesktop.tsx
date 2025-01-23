@@ -3,6 +3,8 @@ import { ReactComponent as Clock } from "./../../assets/images/icon-clock.svg";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useNotesStore } from "../../stores/NotesStore";
+import { useNotificationsStore } from "../../stores/NotificationsStore";
+import { NotificationType } from "../../types/types";
 
 const NewNoteDesktop : React.FC = ()=>{
     const navigate = useNavigate();
@@ -14,6 +16,9 @@ const NewNoteDesktop : React.FC = ()=>{
         text: "",
     });
 
+    const {addNotification} = useNotificationsStore();
+
+
     const handleSave = () => {
         const newNote = {
             title: inputs.title,
@@ -23,6 +28,8 @@ const NewNoteDesktop : React.FC = ()=>{
         };
         addNote(newNote);
         navigate('/home');
+        const notification: NotificationType = {id: Date.now().toString(), message: "Note successfully added.", type: "success"};
+        addNotification(notification);
     };
 
     const handleCancel = () => {
