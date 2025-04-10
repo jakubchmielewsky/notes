@@ -1,19 +1,19 @@
-import { Navigate } from "react-router-dom";
-import { useUserStore } from "../stores/UserStore";
+//import { Navigate } from "react-router-dom";
+//import { useUserStore } from "../stores/UserStore";
 
 interface Props {
-    children: React.ReactNode;
-    replace: boolean;
+  children: React.ReactNode;
+  replace: boolean;
 }
 
 const ProtectedRoute: React.FC<Props> = ({ children, replace }) => {
-    const { currentUser } = useUserStore();
+  //const { currentUser } = useUserStore();
 
-    if (!currentUser) {
-        return <Navigate to="/login" replace={replace} />;
-    }
+  // if (!currentUser) {
+  //     return <Navigate to="/login" replace={replace} />;
+  // }
 
-    return <>{children}</>;
+  return <>{children}</>;
 };
 
 export default ProtectedRoute;

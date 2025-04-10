@@ -1,19 +1,18 @@
-import { ReactComponent as Logo } from './../assets/images/logo.svg';
+import { ReactComponent as Logo } from "./../assets/images/logo.svg";
 
-import { useState } from 'react';
-import PasswordInput from '../components/authForms/PasswordInput';
-import FormHeader from '../components/authForms/FormHeader';
-import { confirmPasswordReset, verifyPasswordResetCode } from 'firebase/auth';
-import { auth } from '../firebase/firebaseConfig';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import PasswordInput from "../components/authForms/PasswordInput";
+import FormHeader from "../components/authForms/FormHeader";
+//import { confirmPasswordReset, verifyPasswordResetCode } from 'firebase/auth';
+//import { auth } from '../firebase/firebaseConfig';
+import { useNavigate } from "react-router-dom";
 
 const ResetPassword: React.FC = () => {
   const [formData, setFormData] = useState({ password: "", confirm: "" });
   const navigate = useNavigate();
 
-    const params = new URLSearchParams(window.location.search);
-    const oobCode = params.get('oobCode');
-
+  const params = new URLSearchParams(window.location.search);
+  const oobCode = params.get("oobCode");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -21,63 +20,63 @@ const ResetPassword: React.FC = () => {
   };
 
   const validate = () => {
-    if(formData.password===formData.confirm) return true;
+    if (formData.password === formData.confirm) return true;
 
     return false;
-  }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if(validate()){
-      try {
-        if(oobCode){
-          await verifyPasswordResetCode(auth, oobCode);
-        } else {
-          throw Error("No oobCode");
-        }
-        
-        await confirmPasswordReset(auth, oobCode, formData.password)
-
-        console.log("passwords changed successfully");
-        navigate("/login");
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    
-
-    
+    // e.preventDefault();
+    // if(validate()){
+    //   try {
+    //     if(oobCode){
+    //       await verifyPasswordResetCode(auth, oobCode);
+    //     } else {
+    //       throw Error("No oobCode");
+    //     }
+    //     await confirmPasswordReset(auth, oobCode, formData.password)
+    //     console.log("passwords changed successfully");
+    //     navigate("/login");
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // }
   };
 
   return (
     <div className="h-screen flex items-center justify-center bg-custom-neutral-100 px-200 py-100 font-inter dark:bg-custom-neutral-700">
       <div className="container max-w-[540px] tablet:px-600 flex flex-col gap-200 bg-white border-1 border-custom-neutral-200 px-200 py-600 rounded-12 dark:bg-custom-neutral-950 dark:border-custom-neutral-700">
-
         <div>
           <Logo className="m-auto current-color dark:text-white" />
         </div>
 
-        <FormHeader title='Reset Your Password' subtitle='Choose a new password to secure your account.'/>
+        <FormHeader
+          title="Reset Your Password"
+          subtitle="Choose a new password to secure your account."
+        />
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-200 pt-300">
           <PasswordInput
-            label='New Password'
+            label="New Password"
             value={formData.password}
             onChange={handleInputChange}
-            hintVisible={true }
+            hintVisible={true}
           />
           <PasswordInput
-            id='confirm'
-            label='Confirm New Password'
-            name='confirm'
+            id="confirm"
+            label="Confirm New Password"
+            name="confirm"
             value={formData.confirm}
             onChange={handleInputChange}
             hintVisible={false}
           />
 
-          <button type="submit" className="w-full bg-custom-blue-500 px-200 py-150 rounded-8 text-white hover:bg-custom-blue-700 focus:outline outline-offset-2 outline-2 outline-custom-neutral-400">Reset Password</button>
+          <button
+            type="submit"
+            className="w-full bg-custom-blue-500 px-200 py-150 rounded-8 text-white hover:bg-custom-blue-700 focus:outline outline-offset-2 outline-2 outline-custom-neutral-400"
+          >
+            Reset Password
+          </button>
         </form>
       </div>
     </div>

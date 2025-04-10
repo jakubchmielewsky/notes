@@ -1,20 +1,20 @@
-import { ReactComponent as Logo } from './../assets/images/logo.svg';
-import { ReactComponent as Google } from './../assets/images/icon-google.svg';
+import { ReactComponent as Logo } from "./../assets/images/logo.svg";
+import { ReactComponent as Google } from "./../assets/images/icon-google.svg";
 
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import EmailInput from '../components/authForms/EmailInput';
-import PasswordInput from '../components/authForms/PasswordInput';
-import FormHeader from '../components/authForms/FormHeader';
-import { useUserStore } from '../stores/UserStore';
-import { signInWithPopup } from 'firebase/auth';
-import { auth, googleAuthProvider } from '../firebase/firebaseConfig';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import EmailInput from "../components/authForms/EmailInput";
+import PasswordInput from "../components/authForms/PasswordInput";
+import FormHeader from "../components/authForms/FormHeader";
+//import { useUserStore } from "../stores/UserStore";
+//import { signInWithPopup } from 'firebase/auth';
+//import { auth, googleAuthProvider } from '../firebase/firebaseConfig';
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState({ email: "", password: "" });
 
-  const {login} = useUserStore();
+  //const { login } = useUserStore();
   const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +29,10 @@ const Login: React.FC = () => {
     let isValid = true;
 
     if (!emailRegex.test(formData.email)) {
-      setError((prev) => ({ ...prev, email: "Please enter a valid email address." }));
+      setError((prev) => ({
+        ...prev,
+        email: "Please enter a valid email address.",
+      }));
       isValid = false;
     }
 
@@ -40,49 +43,65 @@ const Login: React.FC = () => {
     e.preventDefault();
 
     if (validate()) {
-      await login(formData.email, formData.password);
+      //await login(formData.email, formData.password);
       navigate("/home");
-
     }
   };
 
   const handleGoogleLogin = async () => {
-    try {
-      await signInWithPopup(auth, googleAuthProvider);
-      navigate("/home");
-    } catch (error) {
-      console.error(error);
-    }
-  }
+    // try {
+    //   await signInWithPopup(auth, googleAuthProvider);
+    //   navigate("/home");
+    // } catch (error) {
+    //   console.error(error);
+    // }
+  };
 
   return (
     <div className="h-screen flex items-center justify-center bg-custom-neutral-100 px-200 py-100 font-inter dark:bg-custom-neutral-700">
       <div className="container max-w-[540px] tablet:px-600 flex flex-col gap-200 bg-white border-1 border-custom-neutral-200 px-200 py-600 rounded-12 dark:bg-custom-neutral-950 dark:border-custom-neutral-700">
-
         <div>
           <Logo className="m-auto current-color dark:text-white" />
         </div>
 
-        <FormHeader title='Welcome to Note' subtitle='Please log in to continue'/>
+        <FormHeader
+          title="Welcome to Note"
+          subtitle="Please log in to continue"
+        />
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-200 pt-300">
-          <EmailInput value={formData.email} onChange={handleInputChange} errorMessage={error.email} label='Email Address (example@example.com)'/>
+          <EmailInput
+            value={formData.email}
+            onChange={handleInputChange}
+            errorMessage={error.email}
+            label="Email Address (example@example.com)"
+          />
 
           <PasswordInput
             value={formData.password}
             onChange={handleInputChange}
             hintVisible={false}
-            forgotPasswordLink='/forgotpassword'
-            label='Password (example1234)'
+            forgotPasswordLink="/forgotpassword"
+            label="Password (example1234)"
           />
 
-          <button type="submit" className="w-full bg-custom-blue-500 px-200 py-150 rounded-8 text-white hover:bg-custom-blue-700 focus:outline outline-offset-2 outline-2 outline-custom-neutral-400">Login</button>
+          <button
+            type="submit"
+            className="w-full bg-custom-blue-500 px-200 py-150 rounded-8 text-white hover:bg-custom-blue-700 focus:outline outline-offset-2 outline-2 outline-custom-neutral-400"
+          >
+            Login
+          </button>
         </form>
 
         {/* Alternative Login */}
         <div className="flex flex-col gap-200 pt-300 text-center border-t-1 dark:border-custom-neutral-800">
-          <p className="text-preset-5 text-custom-neutral-600 dark:text-custom-neutral-300">Or log in with:</p>
-          <button onClick={handleGoogleLogin} className="flex justify-center items-center gap-200 border-1 border-custom-neutral-300 py-150 rounded-12 text-preset-3 font-medium hover:bg-custom-neutral-50     dark:text-white dark:border-custom-neutral-600 hover:dark:bg-custom-neutral-700">
+          <p className="text-preset-5 text-custom-neutral-600 dark:text-custom-neutral-300">
+            Or log in with:
+          </p>
+          <button
+            onClick={handleGoogleLogin}
+            className="flex justify-center items-center gap-200 border-1 border-custom-neutral-300 py-150 rounded-12 text-preset-3 font-medium hover:bg-custom-neutral-50     dark:text-white dark:border-custom-neutral-600 hover:dark:bg-custom-neutral-700"
+          >
             <Google className="w-[24px] h-[24px] current-color dark:text-white" />
             Google
           </button>
@@ -90,7 +109,15 @@ const Login: React.FC = () => {
 
         <div className="border-t-1 dark:border-custom-neutral-800"></div>
 
-        <p className="text-preset-5 text-center text-custom-neutral-600 dark:text-custom-neutral-300">No account yet? <Link to="/register" className="text-custom-neutral-950 dark:text-custom-neutral-200 hover:text-custom-blue-500">Sign Up</Link></p>
+        <p className="text-preset-5 text-center text-custom-neutral-600 dark:text-custom-neutral-300">
+          No account yet?{" "}
+          <Link
+            to="/register"
+            className="text-custom-neutral-950 dark:text-custom-neutral-200 hover:text-custom-blue-500"
+          >
+            Sign Up
+          </Link>
+        </p>
       </div>
     </div>
   );
